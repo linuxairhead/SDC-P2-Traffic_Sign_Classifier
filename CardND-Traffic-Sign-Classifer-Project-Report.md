@@ -6,9 +6,9 @@
 
 [//]: # (Image References)
 
-[image1]: ./Report/SummaryOfDataTrainingSet.jpg "SummaryOfDataTrainingSet"
-[image2]: ./Report/SummaryOfDataValidationSet.jpg "SummaryOfDataValidationSet"
-[image3]: ./Report/SummaryOfDataTestSet.jpg "SummaryOfDataTestSet"
+[image1]: ./Report/SummaryOfDataTrainingSet.png "SummaryOfDataTrainingSet"
+[image2]: ./Report/SummaryOfDataValidationSet.png "SummaryOfDataValidationSet"
+[image3]: ./Report/SummaryOfDataTestSet.png "SummaryOfDataTestSet"
 [image4]: ./Report/SpeedLimit_20km.png "Traffic Sign 1"
 [image5]: ./Report/SpeedLimit_30km.png "Traffic Sign 2"
 [image6]: ./Report/SpeedLimit_50km.png "Traffic Sign 3"
@@ -21,13 +21,8 @@
 [image13]: ./Report/normalize2.png "Normalize Sample 2"
 [image14]: ./Report/normalize3.png "Normalize Sample 3"
 
-[testImage1]: ./new_images/Sign1.png "Test Sample 1"
-[testImage2]: ./new_images/Sign2.png "Test Sample 2"
-[testImage3]: ./new_images/Sign3.png "Test Sample 3"
-[testImage4]: ./new_images/Sign4.png "Test Sample 4"
-[testImage5]: ./new_images/Sign5.png "Test Sample 5"
-[testImage6]: ./new_images/Sign6.png "Test Sample 6"
-[testImage7]: ./new_images/Sign7.png "Test Sample 7"
+[testImage]: ./Report/NewImage.png "List of New Image"
+
 
 
 ## The following link is to my [Traffic Sign Classifer Project](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
@@ -103,14 +98,12 @@ print("Number of classes =", n_classes)
 
 Here is an exploratory visualization of the data set. It is a bar chart showing how the data distributed for each 43 classifier for German Traffic sign.
 
-```python
-
 ![alt text][image1]
 
 ![alt text][image2]
 
 ![alt text][image3]
-```
+
 
 Here is an exploratory visualization of the data set. I picked 15 sample for each 43 classifier to display for German Traffic sign.
 
@@ -147,7 +140,8 @@ for label in sorted(trainSignImg.keys()):
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-##### As a first step, I decided to convert the images to grayscale because in image recognition, it is often the method used to convert color images to grayscale has little impact on recognition performance. Since our purpose is recognized the traffic sign, there will be less impact of recognition performance. It is also able to perform under less powerful CPU and/or GPU system. I thought it would be quite useful technique. 
+
+As a first step, I decided to convert the images to grayscale because in image recognition, it is often the method used to convert color images to grayscale has little impact on recognition performance. Since our purpose is recognized the traffic sign, there will be less impact of recognition performance. It is also able to perform under less powerful CPU and/or GPU system. I thought it would be quite useful technique. 
 
 Here is an example of after grayscaling.
 
@@ -176,7 +170,7 @@ def grayscale(imageV):
     return imageV
 ```	
 	
-##### As a last step, I [normalized] https://prateekvjoshi.com/2016/04/05/what-is-local-response-normalization-in-convolutional-neural-networks/ the image data because it amplify the excited neuron while dampening the surrounding neurons. You can either normalize within the same channel or you can normalize across channels. When you are normalizing within the same channel, it’s just like considering a 2D neighborhood of dimension N x N, where N is the size of the normalization window. You normalize this window using the values in this neighborhood. If you are normalizing across channels, you will consider a neighborhood along the third dimension but at a single location. You need to consider an area of shape N x 1 x 1. Here 1 x 1 refers to a single value in a 2D matrix and N refers to the normalization size.
+As a last step, I normalized the image data because it amplify the excited neuron while dampening the surrounding neurons. You can either normalize within the same channel or you can normalize across channels. When you are normalizing within the same channel, it’s just like considering a 2D neighborhood of dimension N x N, where N is the size of the normalization window. You normalize this window using the values in this neighborhood. If you are normalizing across channels, you will consider a neighborhood along the third dimension but at a single location. You need to consider an area of shape N x 1 x 1. Here 1 x 1 refers to a single value in a 2D matrix and N refers to the normalization size.
 
 Here is an example of an augmented image:
 
@@ -210,25 +204,21 @@ I used the modify version of LeNet (Yann Lecun) from Lesson 9. Convolutional Neu
 
 My final model consisted of the following layers:
 
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x1 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 28x28x6 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 14x14x6  				|
-|                       |                                               |
-| Convolution 3x3	    | 1x1 stride, same padding, outputs 10x10x16    |
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 5x5x16    				|
-| Flatten               | Output = 400                                  |
-|                       |                                               |
-| Fully connected		| Output = 120 									|
-| RELU					|												|
-|                       |                                               |
-| Fully connected		| Output = 84  									|
-| RELU					|												|
-|                       |                                               |
-| Fully connected		| Output = 43  									|
+   | Order of Layer| Layer         		   |     Description	        				   | 
+   |:--------------|:---------------------:|:---------------------------------------------:| 
+   |               | Input         		   | 32x32x1 RGB image   						   | 
+   | Layer 1       | Convolution 3x3       | 1x1 stride, same padding, outputs 28x28x6 	   |
+   |               | RELU				   |											   |
+   |               | Max pooling	       | 2x2 stride,  outputs 14x14x6  				   |
+   | Layer 2       | Convolution 3x3	   | 1x1 stride, same padding, outputs 10x10x16    |
+   |               | RELU				   |											   |
+   |               | Max pooling	       | 2x2 stride,  outputs 5x5x16    			   |
+   |               | Flatten               | Output = 400                                  |
+   | Layer 3       | Fully connected	   | Output = 120 								   |
+   |               | RELU				   |											   |
+   | Layer 4       | Fully connected	   | Output = 84  								   |
+   |               | RELU				   |											   |
+   | Layer 5       | Fully connected	   | Output = 43  								   |
 
 
 ```python 
@@ -291,14 +281,17 @@ def LeNet_5(x):
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
 To train the model, I used an following epoch, batch size and learning rate.
+I increase epochs to 100 and lower the learning rate to have fine tune the Neural Network
+Increase epochs alone could over fitting the network, I also lower the rate.  
 
 ```python 
 EPOCHS = 50
 BATCH_SIZE = 128
-rate = 0.0001
+rate = 0.001
 ```
 
-#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+
+#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. 
 
 ```python 
 logits = LeNet_5(x)
@@ -322,34 +315,35 @@ My final model results were:
 	Training Set Accuracy = 0.996
 	
 * validation set accuracy of ? 
-	Validation Set Accuracy = 0.885
+	Validation Set Accuracy = 0.940
 	
 * test set accuracy of ?
-	Test Set Accuracy = 0.873
+	Test Set Accuracy = 0.905
 
 If an iterative approach was chosen:
 * What was the first architecture that was tried and why was it chosen?
-    When I first designed architecture, I didn't pre-processing image with gray scale or normalization. 
-	And I just tried to train with LeNet from previous Lab.
+    When I first designed architecture, I didn't pre-processing image with gray scale or normalization. I just chooses to train with LeNet lab for MNIST. 
+	Since LeNet lab for MNIST with 10 Classifier can modify and improve to work with Traffic Sign with 43 classifier.
 	
 * What were some problems with the initial architecture?
-	I wasn't able to obtain accuracy require by lab which was above 96%. In the beginning, I was getting around 92% but without gray scale. After I apply normalization, my accuracy drop even more.
-    So I went back and review all the previous lessons. After I included the gray scale I was able to increase the accuracy to 99%. 	
+	In the beginning, I wasn't able to obtain 93% accuracy which require by lab. After I apply normalization, my accuracy drop even more.
+    So I went back and review all the previous lessons. After I included the gray scale I was able to increase the accuracy to 94%. 	
     
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-	I didn't do much of tuning. I used same parameters which I selected from previous lab for MNIST.
-	I figure it was working pretty well for the 
+* How was the architecture adjusted and why was it adjusted? 
+	I adjusted various different pre-processed image method to better fit the previous defined architecture from LeNet lab for MNIST
 	
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
+* Which parameters were tuned? How were they adjusted and why?
+	I want to fine tune so I lower the learning rate from 0.001 to 0.0001 and increased epoch from 50 to 100 to training more.
+	But increasing epoch from 50 to 100 didn't give me the better result. The accuracy of training set didn't get better after epoch 56.
+	And stayed at 90%. I believe lowering the learning rate to 0.0001, under-fit the training. 
+	
 If a well known architecture was chosen:
 * What architecture was chosen?
 	LeNet_5
 	
 * Why did you believe it would be relevant to the traffic sign application?
-	I learn that the LeNet lab for MNIST with 10 Classifier work pretty well so I believed traffic sign with 43 classifier should work pretty as well. 
-	It was good learning experience, how to apply what I learn from LeNet lab fro MNIST to Traffic Sign Classifier Lab
+	I learn that the LeNet lab for MNIST with 10 Classifier work pretty well so I believed Traffic Sign with 43 classifier should work pretty as well. 
+	It was good learning experience, how to apply what I learn from LeNet lab for MNIST to Traffic Sign Classifier Lab
 	
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
 	I obtained above 95% accuracy on training and validation. so I was expected to work better then result.
@@ -363,42 +357,102 @@ If a well known architecture was chosen:
 
 Here are Seven German traffic signs that I found on the web:
 
-![alt text][testImage1] ![alt text][testImage2] ![alt text][testImage3] ![alt text][testImage4] 
-![alt text][testImage5] ![alt text][testImage6] ![alt text][testImage7]
+![alt text][testImage] 	
 
-The first image might be difficult to classify because 
+The Last image might be difficult to classify because the actual image wasn't square. I didn't re-image to created square so, my training neural network might not able to predict properly
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 Here are the results of the prediction:
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+|  Image			                            |     Prediction	        					|  Correctness  |
+|:---------------------------------------------:|:---------------------------------------------:| :------------:|
+|  Speed limit (30km/h)	                        |  Speed limit (30km/h)							|       O       |
+|  Bumpy road  			                        |  Bumpy road           						|       O       |
+|  Ahead only					                |  Ahead only									|       O       |
+|  Turn left ahead              	      		|  Yield                     					|       X       |
+|  Speed limit (50km/h)                         |  Speed limit (50km/h)                         |       O       |
+|  Right-of-way at the next intersection        |  Right-of-way at the next intersection        |       O       |
+|  Priority road                                |  No entry                                     |       X       |
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 5 of the 7 traffic signs, which gives an accuracy of 71.4%. This compares favorably to the accuracy on the test set of 87.7%
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
 The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+For the first image, the model is relatively sure that this is a Speed limit (30km/h) sign (probability of 1.0), and the image does contain a Speed limit (30km/h) sign. The top five soft max probabilities were
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| 1.00         			| Speed limit (30km/h)  						| 
+| 0.0     				| Speed limit (50km/h) 							|
+| 0.0					| General caution   				     		|
+| 0.0	      			| Wild animals crossing			 				|
+| 0.0				    | Speed limit (20km/h)       					|
+
+For the second image, the model is relatively sure that this is a Bumpy road (probability of 0.87), but the image contain a Bumpy road sign. The top five soft max probabilities were
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 0.87         			| Bumpy road                					| 
+| 0.13     				| Bicycles crossing						        |
+| 0.0					| Traffic signals 				        		|
+| 0.0	      			| No vehicles   			 	     			|
+| 0.0				    | Road work                      				|
+
+For the third image, the model is relatively sure that this is a Ahead only (probability of 1.0), and the image does contain a Ahead only sign. The top five soft max probabilities were
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 1.00         			| Ahead only                					| 
+| 0.0     				| Speed limit (30km/h)					        |
+| 0.0					| Road work        				        		|
+| 0.0	      			| Road narrows on the right	 	     			|
+| 0.0				    | Bicycles crossing             				|
+
+For the fourth image, the model is relatively sure that this is a Yield sign (probability of 0.98), and the image does contain a Turn left ahead sign. The top five soft max probabilities were
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 0.98         			| Yield                     					| 
+| 0.02    				| End of no passing by vehicles over 3.5 metric |
+| 0.0					| End of speed limit (80km/h)	        		|
+| 0.0	      			| Turn left ahead     		 	     			|
+| 0.0				    | Ahead only                    				|
+
+For the fifth image, the model is relatively sure that this is a Speed limit (50km/h) sign (probability of 1.0), and the image does contain a Speed limit (50km/h) sign. The top five soft max probabilities were
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 1.00         			| Speed limit (50km/h)       					| 
+| 0.0     				| Speed limit (100km/h)					        |
+| 0.0					| Speed limit (30km/h)			        		|
+| 0.0					| Speed limit (80km/h)			        		|
+| 0.0					| Speed limit (60km/h)			        		|
+
+For the sixth image, the model is relatively sure that this is a Right-of-way at the next intersection sign (probability of 0.99), and the image does contain a Right-of-way at the next intersection sign. The top five soft max probabilities were
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 0.99         			| Right-of-way at the next intersection			| 
+| 0.0				    | Pedestrians                   				|
+| 0.0   				| Children crossing 					        |
+| 0.0					| Road narrows on the right 	        		|
+| 0.0	      			| General caution           	     			|
 
 
-For the second image ... 
+For the seventh image, the model is relatively sure that this is a Yield (probability of 0.82), but the image contain a Priority road sign. The top five soft max probabilities were
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+| 0.82         			| Yield                      					| 
+| 0.13				    | Ahead only                    				|
+| 0.02    				| Road work          					        |
+| 0.02					| Turn right ahead   			        		|
+| 0.0	      			| Priority road                 	 	     			|
+
 
 
 
