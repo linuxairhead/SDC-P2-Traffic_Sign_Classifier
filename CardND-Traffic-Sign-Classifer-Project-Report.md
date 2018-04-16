@@ -53,7 +53,7 @@ with open(testing_file, mode='rb') as f:
 X_train, y_train = train['features'], train['labels']
 X_valid, y_valid = valid['features'], valid['labels']
 X_test, y_test = test['features'], test['labels']
----
+```
 
 #### 1. Provide a basic summary of the data set. 
 
@@ -82,7 +82,7 @@ print("Number of training examples =", n_train)
 print("Number of testing examples =", n_test)
 print("Image data shape =", image_shape)
 print("Number of classes =", n_classes)
----
+```
 
 * The size of training set is ?
 	Number of training examples = 34799
@@ -110,7 +110,7 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 ![alt text][image2]
 
 ![alt text][image3]
----
+```
 
 Here is an exploratory visualization of the data set. I picked 15 sample for each 43 classifier to display for German Traffic sign.
 
@@ -131,7 +131,7 @@ for label in sorted(trainSignImg.keys()):
         plt.subplot(1,Sign_Per_Line,i+1)
         plt.imshow(trainSignImg[label][i])
     plt.show()
----
+```
 
 ![alt text][image4]
 
@@ -174,7 +174,7 @@ def grayscale(imageV):
     
     imageV = np.reshape(grayImageV, (-1, 32, 32, 1))
     return imageV
----	
+```	
 	
 ##### As a last step, I [normalized] https://prateekvjoshi.com/2016/04/05/what-is-local-response-normalization-in-convolutional-neural-networks/ the image data because it amplify the excited neuron while dampening the surrounding neurons. You can either normalize within the same channel or you can normalize across channels. When you are normalizing within the same channel, it’s just like considering a 2D neighborhood of dimension N x N, where N is the size of the normalization window. You normalize this window using the values in this neighborhood. If you are normalizing across channels, you will consider a neighborhood along the third dimension but at a single location. You need to consider an area of shape N x 1 x 1. Here 1 x 1 refers to a single value in a 2D matrix and N refers to the normalization size.
 
@@ -201,7 +201,7 @@ def normalize(imageV):
     # plot sample normalized image 
     
     return imageV
----	
+```	
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
@@ -286,7 +286,7 @@ def LeNet_5(x):
     logits = tf.matmul(fc2, fc3_W) + fc3_b
 
     return logits
----	
+```
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
@@ -296,7 +296,7 @@ To train the model, I used an following epoch, batch size and learning rate.
 EPOCHS = 50
 BATCH_SIZE = 128
 rate = 0.0001
----
+```
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
@@ -315,7 +315,7 @@ optimizer = tf.train.AdamOptimizer(learning_rate=rate)
 
 # Optimizer uses backpropagation to update the network and minimize training loss
 training_operation = optimizer.minimize(loss_operation)
----
+```
 
 My final model results were:
 * training set accuracy of ?	
